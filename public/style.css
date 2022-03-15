@@ -1,0 +1,19 @@
+#controlPanel {
+  height: 60px;
+}
+
+#PathFinder {
+  width: 1000px;
+}
+
+.box {
+  padding: 0;
+  /* border: none;
+  background: none;  */
+  height: 20px;
+  width: 20px;
+}
+
+.row {
+  width: 1200px;
+}
