@@ -10,7 +10,7 @@ class Row extends Component {
           key={`col${i}`}
           rowNum={this.props.rowNum}
           colNum={i}
-          individualBtn={this.props.rowBtns[i]}
+          btns={this.props.btns}
           setCondition={this.props.setCondition}
         />
       );

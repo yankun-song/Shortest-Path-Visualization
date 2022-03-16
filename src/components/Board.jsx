@@ -9,7 +9,7 @@ class Board extends Component {
         <Row
           key={`row${i}`}
           rowNum={i}
-          rowBtns={this.props.btns.slice(i * 60, i * 60 + 60)}
+          btns={this.props.btns}
           setCondition={this.props.setCondition}
         />
       );

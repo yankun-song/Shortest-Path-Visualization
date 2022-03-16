@@ -8,7 +8,9 @@ class ControlPanel extends Component {
         <button id="dijkstra">Dijkstra</button>
         <button id="bfs">BFS</button>
         <button id="dfs">DFS</button>
-        <button id="reset-btn">Reset</button>
+        <button id="reset-btn" onClick={() => this.props.setBoard()}>
+          Reset
+        </button>
       </div>
     );
   }
