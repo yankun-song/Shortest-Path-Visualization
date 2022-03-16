@@ -3,13 +3,14 @@ import React, { Component } from "react";
 
 class ControlPanel extends Component {
   render() {
-   return (
-     <div id="controlPanel">
-       <button id="dijkstra">Dijkstra</button>
-       <button id="bfs">BFS</button>
-       <button id="dfs">DFS</button>
-     </div>
-   );
+    return (
+      <div id="controlPanel">
+        <button id="dijkstra">Dijkstra</button>
+        <button id="bfs">BFS</button>
+        <button id="dfs">DFS</button>
+        <button id="reset-btn">Reset</button>
+      </div>
+    );
   }
 }
 
