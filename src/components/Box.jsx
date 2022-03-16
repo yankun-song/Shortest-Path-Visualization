@@ -12,8 +12,7 @@ class Box extends Component {
         }}
         className="box"
         onClick={() => {
-          this.props.setCondition(this.props.rowNum, this.props.colNum);
-          console.log(this.props.rowNum, this.props.colNum);
+          this.props.setCondition([this.props.rowNum, this.props.colNum]);
         }}
       ></button>
     );

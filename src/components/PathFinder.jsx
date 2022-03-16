@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import Board from "./Board";
 import ControlPanel from "./ControlPanel";
 
+import BFS from "./../algos/bfs";
+
 class PathFinder extends Component {
   constructor() {
     super();
     this.state = {
       btns: {},
-      nextStart: "",
-      nextEnd: "",
       start: "",
       end: "",
-      blocks: {},
+      count: 0,
     };
     this.setBoard = this.setBoard.bind(this);
     this.setCondition = this.setCondition.bind(this);
@@ -24,7 +24,7 @@ class PathFinder extends Component {
   setBoard() {
     const btns = {};
     const defaultBtn = {
-      visited: false,
+      isVisited: false,
       isStart: false,
       isEnd: false,
       isBlock: false,
@@ -33,51 +33,67 @@ class PathFinder extends Component {
     for (let i = 0; i < 30; i++) {
       for (let j = 0; j < 60; j++) {
         const key = `r${i}c${j}`;
-        console.log(key);
         btns[key] = JSON.parse(JSON.stringify(defaultBtn));
       }
     }
     this.setState({
       btns,
-      nextStart: "",
-      nextEnd: "",
       start: "",
       end: "",
-      blocks: {},
+      count: 0,
     });
   }
 
-  setCondition(i, j) {
+  setCondition(pos, finding = false) {
+    const [i, j] = pos;
     const key = `r${i}c${j}`;
     const newState = JSON.parse(JSON.stringify(this.state));
-    if (newState.nextStart === "") {
-      newState.btns[key].isStart = true;
-      newState.btns[key].visited = true;
-      newState.btns[key].color = "red";
-      newState.start = key;
-      newState.nextStart = false;
+
+    if (!finding) {
+      if (newState.count === 0) {
+        newState.btns[key].isStart = true;
+        newState.btns[key].isVisited = true;
+        newState.btns[key].color = "red";
+        newState.start = pos;
+        newState.count += 1;
+        this.setState(newState);
+        return;
+      }
+      if (newState.count === 1) {
+        newState.btns[key].isEnd = true;
+        newState.btns[key].isVisited = true;
+        newState.btns[key].color = "green";
+        newState.end = pos;
+        newState.count += 1;
+        this.setState(newState);
+        return;
+      }
+      // treat as a block
+      newState.btns[key].isBlock = true;
+      newState.btns[key].color = "black";
+      newState.count += 1;
+      this.setState(newState);
+      return;
+    } else {
+      newState.btns[key].isVisited = true;
+      newState.btns[key].color = "yellow";
       this.setState(newState);
       return;
     }
-    if (newState.nextEnd === "") {
-      newState.btns[key].isEnd = true;
-      newState.btns[key].visited = true;
-      newState.btns[key].color = "green";
-      newState.end = key;
-      newState.nextEnd = false;
-      this.setState(newState);
-      return;
-    }
-    // treat as a block
-    newState.btns[key].isBlock = true;
-    newState.btns[key].color = "black";
-    newState.blocks[key] = 1;
-    this.setState(newState);
   }
+
+  bfs(pos, cb, btns) {
+    BFS(pos, cb, btns);
+  }
+
   render() {
     return (
       <>
-        <ControlPanel setBoard={this.setBoard} />
+        <ControlPanel
+          btns={this.state.btns}
+          setBoard={this.setBoard}
+          bfs={this.bfs}
+        />
         <Board btns={this.state.btns} setCondition={this.setCondition} />
       </>
     );
