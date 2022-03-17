@@ -32,7 +32,6 @@ async function BFS(start, end, cb, btns) {
         queue.push(childKey);
         btns[key].isInQ = true;
       }
-  
     }
   }
 }

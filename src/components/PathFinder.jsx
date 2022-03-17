@@ -15,6 +15,7 @@ class PathFinder extends Component {
     };
     this.setBoard = this.setBoard.bind(this);
     this.setCondition = this.setCondition.bind(this);
+    this.forceUpdate = this.forceUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -44,7 +45,7 @@ class PathFinder extends Component {
     });
   }
 
-  setCondition(pos, finding = false) {
+  async setCondition(pos, finding = false) {
     const [i, j] = pos;
     const key = `r${i}c${j}`;
     const newState = JSON.parse(JSON.stringify(this.state));
@@ -76,13 +77,20 @@ class PathFinder extends Component {
       if (newState.btns[key].isStart) return;
       newState.btns[key].isVisited = true;
       newState.btns[key].color = "yellow";
-      this.setState(newState);
+      await this.setState(newState);
+      await this.forceUpdate(() => {
+        console.log("forced!!");
+      });
       return;
     }
   }
 
   bfs(start, end, cb, btns) {
     BFS(start, end, cb, btns);
+  }
+  componentDidUpdate() {
+    // console.log("updated!");
+    // this.render();
   }
 
   render() {
