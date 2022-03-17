@@ -9,7 +9,12 @@ class ControlPanel extends Component {
         <button
           id="bfs"
           onClick={() =>
-            this.props.bfs([0, 0], this.props.setBoard, this.props.btns)
+            this.props.bfs(
+              this.props.start,
+              this.props.end,
+              this.props.setCondition,
+              this.props.btns
+            )
           }
         >
           BFS

@@ -52,7 +52,6 @@ class PathFinder extends Component {
     if (!finding) {
       if (newState.count === 0) {
         newState.btns[key].isStart = true;
-        newState.btns[key].isVisited = true;
         newState.btns[key].color = "red";
         newState.start = pos;
         newState.count += 1;
@@ -61,7 +60,6 @@ class PathFinder extends Component {
       }
       if (newState.count === 1) {
         newState.btns[key].isEnd = true;
-        newState.btns[key].isVisited = true;
         newState.btns[key].color = "green";
         newState.end = pos;
         newState.count += 1;
@@ -75,6 +73,7 @@ class PathFinder extends Component {
       this.setState(newState);
       return;
     } else {
+      if (newState.btns[key].isStart) return;
       newState.btns[key].isVisited = true;
       newState.btns[key].color = "yellow";
       this.setState(newState);
@@ -82,16 +81,19 @@ class PathFinder extends Component {
     }
   }
 
-  bfs(pos, cb, btns) {
-    BFS(pos, cb, btns);
+  bfs(start, end, cb, btns) {
+    BFS(start, end, cb, btns);
   }
 
   render() {
     return (
       <>
         <ControlPanel
+          start={this.state.start}
+          end={this.state.end}
           btns={this.state.btns}
           setBoard={this.setBoard}
+          setCondition={this.setCondition}
           bfs={this.bfs}
         />
         <Board btns={this.state.btns} setCondition={this.setCondition} />
